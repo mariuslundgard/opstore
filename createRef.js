@@ -12,6 +12,15 @@ module.exports = function createRef (refKey, store, ops) {
   ref.get = (key) =>
     store.get(key ? [refKey, key].join('/') : refKey)
 
+  ref.set = (...args) => {
+    if (args.length === 2) {
+      const [key, value] = args
+      return store.set(key ? [refKey, key].join('/') : refKey, value)
+    }
+
+    return store.set(refKey, args[0])
+  }
+
   ref.subscribe = (observer) =>
     store.subscribe(observer, refKey)
 
