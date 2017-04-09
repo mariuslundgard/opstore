@@ -1,0 +1,23 @@
+{
+  "name": "opstore",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Marius Lundgård <studio@mariuslundgard.com>",
+  "license": "MIT",
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "test": "mocha test/**/*-test.js"
+  },
+  "dependencies": {
+    "@yr/property": "^7.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0",
+    "pre-commit": "^1.2.2"
+  }
+}
