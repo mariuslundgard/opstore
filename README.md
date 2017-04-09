@@ -17,7 +17,7 @@ npm install opstore
 
 ## Usage
 
-### Basic usage
+### Out of the box
 ```js
 const {createStore} = require('opstore')
 
