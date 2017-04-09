@@ -1,10 +1,12 @@
-# opstore [![Build Status](https://travis-ci.org/mariuslundgard/opstore.svg?branch=master)](https://travis-ci.org/mariuslundgard/opstore)
+# opstore
 
 An operator-based data store for JavaScript.
 
 ```sh
 npm install opstore
 ```
+
+[![Build Status](https://travis-ci.org/mariuslundgard/opstore.svg?branch=master)](https://travis-ci.org/mariuslundgard/opstore)
 
 ## Features
 * Single source of truth. Data is stored in a single atom.
