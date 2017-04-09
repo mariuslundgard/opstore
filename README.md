@@ -9,7 +9,7 @@ npm install opstore
 [![Build Status](https://travis-ci.org/mariuslundgard/opstore.svg?branch=master)](https://travis-ci.org/mariuslundgard/opstore)
 
 ## Features
-* Single source of truth. Data is stored in a single atom.
+* Single source of truth. Data is stored in a single, immutable atom.
 * Composable. Keep sizes small and roll your own store by only bundling the operators you need.
 * Extensible. Add your own operators and middleware.
 * Observable. Subscribe to partial and/or every state change.
