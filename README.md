@@ -131,7 +131,30 @@ const titleRef = store.ref('title')
 
 The reference instance contains the operator methods.
 
-#### `ref.decr([key])`
+#### Built-in methods
+
+##### `ref.get([key])` (built-in)
+Gets a state snapshot (the current value).
+
+##### `ref.set` (built-in)
+Sets a value at a key (dispatches a `set` operation).
+
+##### `ref.subscribe(observerFn)` (built-in)
+Subscribe to state changes.
+
+```js
+const store = createStore({items: []})
+const itemsRef = store.ref('items')
+
+itemsRef.subscribe(console.log)
+
+itemsRef.lpush(1) // [1]
+itemsRef.lpush(2) // [1, 2]
+```
+
+#### Optional methods (operators)
+
+##### `ref.decr([key])` (optional)
 Decrements a numeric value.
 
 ```js
@@ -143,7 +166,7 @@ countRef.decr()
 console.log(countRef.get()) // -1
 ```
 
-#### `ref.incr([key])`
+##### `ref.incr([key])` (optional)
 Increments a numeric value.
 
 ```js
@@ -155,7 +178,7 @@ countRef.incr()
 console.log(countRef.get()) // 1
 ```
 
-#### `ref.lpush([key], value)`
+##### `ref.lpush([key], value)` (optional)
 Pushes a value to end of a list.
 
 ```js
@@ -167,7 +190,7 @@ itemsRef.lpush(2)
 console.log(itemsRef.get()) // [1, 2]
 ```
 
-#### `ref.lremi([key], index)`
+##### `ref.lremi([key], index)` (optional)
 Removes a value from a list at the given index.
 
 ```js
@@ -178,7 +201,7 @@ itemsRef.lremi(1)
 console.log(itemsRef.get()) // [2]
 ```
 
-#### `ref.lset([key], value)`
+##### `ref.lset([key], value)` (optional)
 Sets a value in a list at a given index.
 
 ```js
