@@ -15,6 +15,11 @@ npm install opstore
 * Observable. Subscribe to partial and/or every state change.
 * Message-driven. Every operation is dispatched as messages, which enables such things as logging and event sourcing.
 
+## Motivation
+`opstore` was built to make it easier to build “vanilla” web apps. Being able to listen to state changes in certain part of the state tree, makes it possible to create tiny render cycles that’s simple to reason about and perform well.
+
+It’s based on ideas from [Redux](http://redux.js.org/), [Redis](https://redis.io/), [Firebase](https://firebase.google.com/) and [Yr](https://www.yr.no/en)’s source code.
+
 ## Usage
 
 ### Out of the box
