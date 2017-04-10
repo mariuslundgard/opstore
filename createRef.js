@@ -9,6 +9,10 @@ module.exports = function createRef (refKey, store, ops) {
     }
   })
 
+  ref.ref = (key) => {
+    return store.ref([refKey, key].join('/'))
+  }
+
   ref.get = (key) =>
     store.get(key ? [refKey, key].join('/') : refKey)
 
