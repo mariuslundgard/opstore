@@ -12,6 +12,22 @@ module.exports = function buildStore (ops = {}) {
 
     let state = initialState
 
+    const applyOp = (op) => {
+      if (ops[op.type]) {
+        ops[op.type].exec(store, op)
+      } else if (op.type === 'set') {
+        if (op.key) {
+          state = property.set(state, op.key, op.value, {immutable: true})
+          store.notifyObservers(op.key.split('/'))
+        } else {
+          state = op.value
+          store.notifyObservers(['.'])
+        }
+      } else {
+        throw new Error(`Unknown operation: ${op.type}`)
+      }
+    }
+
     store.ref = (refKey) => {
       refs[refKey] = createRef(refKey, store, ops)
       return refs[refKey]
@@ -20,7 +36,7 @@ module.exports = function buildStore (ops = {}) {
     store.dispatch = (op) => {
       let middlewareIdx = 0
 
-      const next = () => ops[op.type].exec(store, op)
+      const next = () => applyOp(op)
 
       const callNext = () => {
         const middlewareFn = middlewareFns[middlewareIdx++]
@@ -39,14 +55,10 @@ module.exports = function buildStore (ops = {}) {
 
     store.set = (...args) => {
       if (args.length === 2) {
-        const [key, value] = args
-        state = property.set(state, key, value, {immutable: true})
-        store.notifyObservers(key.split('/'))
+        store.dispatch({type: 'set', key: args[0], value: args[1]})
       } else {
-        state = args[0]
-        store.notifyObservers(['.'])
+        store.dispatch({type: 'set', value: args[0]})
       }
-
       return store
     }  
 
