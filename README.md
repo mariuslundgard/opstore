@@ -6,7 +6,8 @@ An operator-based data store for JavaScript.
 npm install opstore
 ```
 
-[![Build Status](https://travis-ci.org/mariuslundgard/opstore.svg?branch=master)](https://travis-ci.org/mariuslundgard/opstore)
+[![build status](https://img.shields.io/travis/mariuslundgard/opstore/master.svg?style=flat-square)](https://travis-ci.org/mariuslundgard/opstore)
+[![npm version](https://img.shields.io/npm/v/opstore.svg?style=flat-square)](https://www.npmjs.com/package/opstore)
 
 ## Features
 * Single source of truth. Data is stored in a single, immutable atom.
