@@ -3,9 +3,7 @@
 const property = require('../utils/property')
 
 function exec (store, op) {
-  const currValue = property.get(store.state, op.key)
-
-  store.state = property.set(store.state, op.key, currValue.concat([op.value]))
+  store.state = property.set(store.state, op.key, op.value)
   store.notifyObservers(op.key ? op.key.split('/') : ['.'])
 }
 

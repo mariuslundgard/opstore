@@ -14,12 +14,12 @@ npm install opstore
 * Composable. Keep sizes small and roll your own store by only bundling the operators you need.
 * Extensible. Add your own operators and middleware.
 * Observable. Subscribe to partial and/or every state change.
-* Message-driven. Every operation is dispatched as messages, which enables such things as logging and event sourcing.
+* Message-driven. Every operation is dispatched internally as a message, which enables such things as logging and event sourcing by way of middleware.
 
 ## Motivation
-`opstore` was built to make it easier to build “vanilla” web apps. Being able to listen to state changes in certain part of the state tree, makes it possible to create tiny render cycles that’s simple to reason about and perform well.
+`opstore` was built to make it easier to build “vanilla” web apps. Being able to listen to state changes in certain part of the state tree, makes it possible to create tiny render cycles that are simple to reason about and perform well.
 
-It’s based on ideas from [Redux](http://redux.js.org/), [Redis](https://redis.io/), [Firebase](https://firebase.google.com/) and [Yr](https://www.yr.no/en)’s source code.
+This project is based on ideas from [Redux](http://redux.js.org/), [Redis](https://redis.io/), [Firebase](https://firebase.google.com/) and [Yr](https://www.yr.no/en)’s source code.
 
 ## Usage
 
@@ -113,11 +113,8 @@ Gets a state snapshot (the current value).
 Notifies observers at any key.
 > NOTE: A *key* is a slash-delimited path to a value in the state tree.
 
-#### `store.ref(key)`
+#### `store.ref([key])`
 Creates a reference to a value in the state tree.
-
-#### `store.set([key], value)`
-Sets a value at a key (dispatches a `set` operation).
 
 #### `store.subscribe(observer, [key])`
 Subscribes to changes to a key’s value in the state tree.
@@ -125,7 +122,20 @@ Subscribes to changes to a key’s value in the state tree.
 #### `store.use(middlewareFn)`
 Adds a middleware function to the middleware stack. This allows for intercepting operations before they are applied.
 
-### Reference methods (operators)
+```js
+const store = createStore([])
+const ref = store.ref()
+
+// Add a simple logger middleware
+store.use((op, next) => {
+  console.log(JSON.stringify(op))
+  next()
+})
+
+ref.lpush(1) // {"type":"lpush","value":1}
+```
+
+### Reference methods
 
 Using the `ref()` method on the store (see *Store methods* above) yields a reference instance:
 
@@ -135,15 +145,13 @@ const titleRef = store.ref('title')
 // Use the "titleRef" instance to modify the "title" state
 ```
 
-The reference instance contains the operator methods.
-
-#### Built-in methods
+The reference instance contains the operator methods. Using references is the only way to change state.
 
 ##### `ref.get([key])` (built-in)
 Gets a state snapshot (the current value).
 
-##### `ref.set` (built-in)
-Sets a value at a key (dispatches a `set` operation).
+##### `ref.ref([key])` (built-in)
+Creates a reference to a value in the state tree, relative to the parent reference.
 
 ##### `ref.subscribe(observerFn)` (built-in)
 Subscribe to state changes.
@@ -158,9 +166,9 @@ itemsRef.lpush(1) // [1]
 itemsRef.lpush(2) // [1, 2]
 ```
 
-#### Optional methods (operators)
+#### Operators
 
-##### `ref.decr([key])` (optional)
+##### `ref.decr([key])`
 Decrements a numeric value.
 
 ```js
@@ -172,7 +180,7 @@ countRef.decr()
 console.log(countRef.get()) // -1
 ```
 
-##### `ref.incr([key])` (optional)
+##### `ref.incr([key])`
 Increments a numeric value.
 
 ```js
@@ -184,7 +192,7 @@ countRef.incr()
 console.log(countRef.get()) // 1
 ```
 
-##### `ref.lpush([key], value)` (optional)
+##### `ref.lpush([key], value)`
 Pushes a value to end of a list.
 
 ```js
@@ -196,7 +204,7 @@ itemsRef.lpush(2)
 console.log(itemsRef.get()) // [1, 2]
 ```
 
-##### `ref.lremi([key], index)` (optional)
+##### `ref.lremi([key], index)`
 Removes a value from a list at the given index.
 
 ```js
@@ -207,7 +215,7 @@ itemsRef.lremi(1)
 console.log(itemsRef.get()) // [2]
 ```
 
-##### `ref.lset([key], value)` (optional)
+##### `ref.lset([key], value)`
 Sets a value in a list at a given index.
 
 ```js
@@ -217,3 +225,6 @@ const itemsRef = store.ref('items')
 itemsRef.lset(1, 3)
 console.log(itemsRef.get()) // [1, 3]
 ```
+
+##### `ref.set([key], value)`
+Sets a value at a key.

@@ -5,5 +5,6 @@ module.exports = {
   incr: require('./incr'),
   lremi: require('./lremi'),
   lset: require('./lset'),
-  lpush: require('./lpush')
+  lpush: require('./lpush'),
+  set: require('./set')
 }

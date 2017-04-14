@@ -10,7 +10,7 @@ describe('opstore', () => {
       const store = createStore({dict: {items: []}})
       const dictRef = store.ref('dict')
       const itemsRef = dictRef.ref('items')
-      
+
       assert(Array.isArray(itemsRef.get()))
     })
   })

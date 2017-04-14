@@ -13,13 +13,16 @@ describe('opstore', () => {
 
     it('should update stored data', () => {
       const store = createStore(true)
+      const ref = store.ref()
+
       assert(store.get())
-      store.set(false)
+      ref.set(false)
       assert(store.get() === false)
     })
 
     it('should stream state changes', (done) => {
       const store = createStore(-1)
+      const ref = store.ref()
 
       let idx = 0
       const unsubscribe = store.subscribe((state) => {
@@ -32,9 +35,9 @@ describe('opstore', () => {
         }
       })
 
-      store.set(0)
-      store.set(1)
-      store.set(2)
+      ref.set(0)
+      ref.set(1)
+      ref.set(2)
     })
 
     it('should enable event sourcing', () => {

@@ -1,11 +1,14 @@
 'use strict'
 
+const property = require('../utils/property')
+
 function exec (store, op) {
-  const currValue = store.get(op.key)
+  const currValue = property.get(store.state, op.key)
   const newValue = currValue.map((item) => item)
 
   newValue.splice(op.index, 1)
-  return store.set(op.key, newValue)
+  store.state = property.set(store.state, op.key, newValue)
+  store.notifyObservers(op.key ? op.key.split('/') : ['.'])
 }
 
 function create (...args) {

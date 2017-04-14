@@ -1,7 +1,9 @@
 'use strict'
 
+const property = require('../utils/property')
+
 function exec (store, op) {
-  const currValue = store.get(op.key)
+  const currValue = property.get(store.state, op.key)
   const newValue = currValue.map((item, index) => {
     if (index === op.index) {
       return op.value
@@ -9,7 +11,8 @@ function exec (store, op) {
     return item
   })
 
-  return store.set(op.key, newValue)
+  store.state = property.set(store.state, op.key, newValue)
+  store.notifyObservers(op.key ? op.key.split('/') : ['.'])
 }
 
 function create (...args) {
@@ -17,7 +20,7 @@ function create (...args) {
     const [type, refKey, key, index, value] = args
     return {type, key: [refKey, key].join('/'), index, value}
   }
-  
+
   const [type, key, index, value] = args
   return {type, key, index, value}
 }

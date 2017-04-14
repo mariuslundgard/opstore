@@ -1,31 +1,21 @@
 'use strict'
 
 const createRef = require('./createRef')
-const property = require('@yr/property')
+const property = require('./utils/property')
 
 module.exports = function buildStore (ops = {}) {
   return function createStore (initialState) {
-    const store = {}
+    const store = {state: initialState}
     const refs = {}
     const observers = {}
     const middlewareFns = []
 
-    let state = initialState
-
     const applyOp = (op) => {
       if (ops[op.type]) {
-        ops[op.type].exec(store, op)
-      } else if (op.type === 'set') {
-        if (op.key) {
-          state = property.set(state, op.key, op.value, {immutable: true})
-          store.notifyObservers(op.key.split('/'))
-        } else {
-          state = op.value
-          store.notifyObservers(['.'])
-        }
-      } else {
-        throw new Error(`Unknown operation: ${op.type}`)
+        return ops[op.type].exec(store, op)
       }
+
+      throw new Error(`Unknown operation: ${op.type}`)
     }
 
     store.ref = (refKey) => {
@@ -53,17 +43,8 @@ module.exports = function buildStore (ops = {}) {
       return store
     }
 
-    store.set = (...args) => {
-      if (args.length === 2) {
-        store.dispatch({type: 'set', key: args[0], value: args[1]})
-      } else {
-        store.dispatch({type: 'set', value: args[0]})
-      }
-      return store
-    }  
-
     store.get = (key) => {
-      return key ? property.get(state, key) : state
+      return key ? property.get(store.state, key) : store.state
     }
 
     store.subscribe = (observer, refKey = '.') => {
@@ -85,7 +66,7 @@ module.exports = function buildStore (ops = {}) {
 
       if (observers[key]) {
         observers[key].forEach((observer) => {
-          observer(key === '.' ? state : property.get(state, key))
+          observer(key === '.' ? store.state : property.get(store.state, key))
         })
       }
 
