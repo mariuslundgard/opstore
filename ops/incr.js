@@ -1,6 +1,6 @@
 'use strict'
 
-const property = require('../utils/property')
+const property = require('segmented-property')
 
 function exec (store, op) {
   store.state = property.set(store.state, op.key, store.get(op.key) + 1)
