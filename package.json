@@ -14,7 +14,7 @@
     "test": "mocha test/**/*-test.js"
   },
   "dependencies": {
-    "@yr/property": "^7.0.3"
+    "segmented-property": "^1.0.2"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

@@ -1,7 +1,7 @@
 'use strict'
 
 const createRef = require('./createRef')
-const property = require('./utils/property')
+const property = require('segmented-property')
 
 module.exports = function buildStore (ops = {}) {
   return function createStore (initialState) {
