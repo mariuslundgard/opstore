@@ -215,7 +215,7 @@ itemsRef.lremi(1)
 console.log(itemsRef.get()) // [2]
 ```
 
-##### `ref.lset([key], value)`
+##### `ref.lset([key], index, value)`
 Sets a value in a list at a given index.
 
 ```js
@@ -228,3 +228,11 @@ console.log(itemsRef.get()) // [1, 3]
 
 ##### `ref.set([key], value)`
 Sets a value at a key.
+
+```js
+const store = createStore({foo: 1})
+const fooRef = store.ref('foo')
+
+fooRef.set(2)
+console.log(fooRef.get()) // 2
+```
