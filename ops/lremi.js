@@ -1,5 +1,6 @@
 'use strict'
 
+const pathJoin = require('../pathJoin')
 const property = require('segmented-property')
 
 function exec (store, op) {
@@ -11,14 +12,14 @@ function exec (store, op) {
   store.notifyObservers(op.key ? op.key.split('/') : ['.'])
 }
 
-function create (...args) {
-  if (args.length === 4) {
-    const [type, refKey, key, index] = args
-    return {type, key: [refKey, key].join('/'), index}
+function create (type, refKey, args) {
+  let key = refKey
+
+  if (args.length === 2) {
+    key = pathJoin(key, args.shift())
   }
 
-  const [type, key, index] = args
-  return {type, key, index}
+  return {type, key, index: args[0]}
 }
 
 module.exports = {

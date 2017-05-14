@@ -18,5 +18,15 @@ describe('opstore', () => {
 
       assert.equal(ref.get(), -2)
     })
+
+    it('should decrement a number by reference', () => {
+      const store = createStore({foo: {bar: 0}})
+      const ref = store.ref('foo')
+
+      ref.decr('bar')
+      ref.decr('bar')
+
+      assert.equal(ref.get('bar'), -2)
+    })
   })
 })

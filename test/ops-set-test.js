@@ -17,5 +17,14 @@ describe('opstore', () => {
 
       assert.equal(ref.get(), 1)
     })
+
+    it('should set a value by reference', () => {
+      const store = createStore({foo: 1})
+      const ref = store.ref()
+
+      ref.set('foo', 2)
+
+      assert.equal(ref.get('foo'), 2)
+    })
   })
 })

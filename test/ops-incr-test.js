@@ -18,5 +18,15 @@ describe('opstore', () => {
 
       assert.equal(ref.get(), 2)
     })
+
+    it('should increment a number by reference', () => {
+      const store = createStore({foo: {bar: 0}})
+      const ref = store.ref('foo')
+
+      ref.incr('bar')
+      ref.incr('bar')
+
+      assert.equal(ref.get('bar'), 2)
+    })
   })
 })

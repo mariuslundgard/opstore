@@ -4,15 +4,20 @@ module.exports = function createRef (refKey, store, ops) {
   const ref = {}
 
   Object.keys(ops).forEach((opKey) =>
-    ref[opKey] = (...args) =>
-      store.dispatch(ops[opKey].create(opKey, refKey, ...args))
+    ref[opKey] = (...args) => {
+      return store.dispatch(ops[opKey].create(opKey, refKey, args))
+    }
   )
 
-  ref.ref = (key) =>
-    store.ref([refKey, key].join('/'))
+  ref.ref = (key) => {
+    const k = [refKey, key].filter((k) => !!k).join('/')
+    return store.ref(k)
+  }
 
-  ref.get = (key) =>
-    store.get(key ? [refKey, key].join('/') : refKey)
+  ref.get = (key) => {
+    const k = [refKey, key].filter((k) => !!k).join('/')
+    return store.get(k)
+  }
 
   ref.subscribe = (observer) =>
     store.subscribe(observer, refKey)

@@ -18,5 +18,15 @@ describe('opstore', () => {
 
       assert.equal(JSON.stringify(ref.get()), '[0,1,2]')
     })
+
+    it('should set an item in a list at a given index by reference', () => {
+      const store = createStore({foo: {bar: [0, 0, 0]}})
+      const ref = store.ref('foo')
+
+      ref.lset('bar', 1, 1)
+      ref.lset('bar', 2, 2)
+
+      assert.equal(JSON.stringify(ref.get('bar')), '[0,1,2]')
+    })
   })
 })

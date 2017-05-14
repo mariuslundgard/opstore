@@ -17,5 +17,14 @@ describe('opstore', () => {
 
       assert.equal(JSON.stringify(ref.get()), '[0,2]')
     })
+
+    it('should remove an item from at list at a given index by reference', () => {
+      const store = createStore({foo: {bar: [0, 1, 2]}})
+      const ref = store.ref('foo')
+
+      ref.lremi('bar', 1)
+
+      assert.equal(JSON.stringify(ref.get('bar')), '[0,2]')
+    })
   })
 })

@@ -18,5 +18,15 @@ describe('opstore', () => {
 
       assert.equal(JSON.stringify(ref.get()), '[1,2]')
     })
+
+    it('should push an item to the end of a list by reference', () => {
+      const store = createStore({foo: {bar: []}})
+      const ref = store.ref('foo')
+
+      ref.lpush('bar', 1)
+      ref.lpush('bar', 2)
+
+      assert.equal(JSON.stringify(ref.get('bar')), '[1,2]')
+    })
   })
 })
