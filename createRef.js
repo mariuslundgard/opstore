@@ -1,23 +1,20 @@
 'use strict'
 
+const pathJoin = require('./pathJoin')
+
 module.exports = function createRef (refKey, store, ops) {
   const ref = {}
 
   Object.keys(ops).forEach((opKey) =>
-    ref[opKey] = (...args) => {
-      return store.dispatch(ops[opKey].create(opKey, refKey, args))
-    }
+    ref[opKey] = (...args) =>
+      store.dispatch(ops[opKey].create(opKey, refKey, args))
   )
 
-  ref.ref = (key) => {
-    const k = [refKey, key].filter((k) => !!k).join('/')
-    return store.ref(k)
-  }
+  ref.ref = (key) =>
+    store.ref(pathJoin(refKey, key))
 
-  ref.get = (key) => {
-    const k = [refKey, key].filter((k) => !!k).join('/')
-    return store.get(k)
-  }
+  ref.get = (key) =>
+    store.get(pathJoin(refKey, key))
 
   ref.subscribe = (observer) =>
     store.subscribe(observer, refKey)
