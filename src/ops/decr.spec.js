@@ -1,9 +1,7 @@
 'use strict'
 
-const assert = require('assert')
 const buildStore = require('../buildStore')
 const decr = require('../ops/decr')
-const {describe, it} = require('mocha')
 
 describe('opstore', () => {
   const createStore = buildStore({decr})
@@ -16,7 +14,7 @@ describe('opstore', () => {
       ref.decr()
       ref.decr()
 
-      assert.equal(ref.get(), -2)
+      expect(ref.get()).toEqual(-2)
     })
 
     it('should decrement a number by reference', () => {
@@ -26,7 +24,7 @@ describe('opstore', () => {
       ref.decr('bar')
       ref.decr('bar')
 
-      assert.equal(ref.get('bar'), -2)
+      expect(ref.get('bar')).toEqual(-2)
     })
   })
 })

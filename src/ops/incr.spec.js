@@ -1,9 +1,7 @@
 'use strict'
 
-const assert = require('assert')
 const buildStore = require('../buildStore')
 const incr = require('../ops/incr')
-const {describe, it} = require('mocha')
 
 describe('opstore', () => {
   const createStore = buildStore({incr})
@@ -16,7 +14,7 @@ describe('opstore', () => {
       ref.incr()
       ref.incr()
 
-      assert.equal(ref.get(), 2)
+      expect(ref.get()).toEqual(2)
     })
 
     it('should increment a number by reference', () => {
@@ -26,7 +24,7 @@ describe('opstore', () => {
       ref.incr('bar')
       ref.incr('bar')
 
-      assert.equal(ref.get('bar'), 2)
+      expect(ref.get('bar')).toEqual(2)
     })
   })
 })

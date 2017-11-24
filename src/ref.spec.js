@@ -1,8 +1,6 @@
 'use strict'
 
-const assert = require('assert')
-const {createStore} = require('../')
-const {describe, it} = require('mocha')
+const {createStore} = require('./')
 
 describe('opstore', () => {
   describe('ref', () => {
@@ -11,7 +9,7 @@ describe('opstore', () => {
       const dictRef = store.ref('dict')
       const itemsRef = dictRef.ref('items')
 
-      assert(Array.isArray(itemsRef.get()))
+      expect(Array.isArray(itemsRef.get())).toEqual(true)
     })
   })
 })

@@ -1,9 +1,7 @@
 'use strict'
 
-const assert = require('assert')
 const buildStore = require('../buildStore')
 const lpush = require('../ops/lpush')
-const {describe, it} = require('mocha')
 
 describe('opstore', () => {
   const createStore = buildStore({lpush})
@@ -16,7 +14,7 @@ describe('opstore', () => {
       ref.lpush(1)
       ref.lpush(2)
 
-      assert.equal(JSON.stringify(ref.get()), '[1,2]')
+      expect(JSON.stringify(ref.get())).toEqual('[1,2]')
     })
 
     it('should push an item to the end of a list by reference', () => {
@@ -26,7 +24,7 @@ describe('opstore', () => {
       ref.lpush('bar', 1)
       ref.lpush('bar', 2)
 
-      assert.equal(JSON.stringify(ref.get('bar')), '[1,2]')
+      expect(JSON.stringify(ref.get('bar'))).toEqual('[1,2]')
     })
   })
 })

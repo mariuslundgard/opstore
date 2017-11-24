@@ -1,9 +1,7 @@
 'use strict'
 
-const assert = require('assert')
 const buildStore = require('../buildStore')
 const lremi = require('../ops/lremi')
-const {describe, it} = require('mocha')
 
 describe('opstore', () => {
   const createStore = buildStore({lremi})
@@ -15,7 +13,7 @@ describe('opstore', () => {
 
       ref.lremi(1)
 
-      assert.equal(JSON.stringify(ref.get()), '[0,2]')
+      expect(JSON.stringify(ref.get())).toEqual('[0,2]')
     })
 
     it('should remove an item from at list at a given index by reference', () => {
@@ -24,7 +22,7 @@ describe('opstore', () => {
 
       ref.lremi('bar', 1)
 
-      assert.equal(JSON.stringify(ref.get('bar')), '[0,2]')
+      expect(JSON.stringify(ref.get('bar'))).toEqual('[0,2]')
     })
   })
 })

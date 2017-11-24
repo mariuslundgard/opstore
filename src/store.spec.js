@@ -1,32 +1,33 @@
 'use strict'
 
-const assert = require('assert')
-const {createStore} = require('../')
-const {describe, it} = require('mocha')
+const {createStore} = require('./')
 
 describe('opstore', () => {
   describe('store', () => {
     it('should store data', () => {
       const store = createStore(true)
-      assert(store.get())
+      expect(store.get()).toEqual(true)
     })
 
     it('should update stored data', () => {
       const store = createStore(true)
       const ref = store.ref()
 
-      assert(store.get())
+      expect(store.get()).toEqual(true)
       ref.set(false)
-      assert(store.get() === false)
+      expect(store.get()).toEqual(false)
     })
 
-    it('should stream state changes', (done) => {
+    it('should stream state changes', done => {
+      expect.assertions(3)
+
       const store = createStore(-1)
       const ref = store.ref()
 
       let idx = 0
-      const unsubscribe = store.subscribe((state) => {
-        assert(state === idx)
+      const unsubscribe = store.subscribe(state => {
+        expect(state).toEqual(idx)
+
         if (idx === 2) {
           unsubscribe()
           done()
@@ -61,10 +62,7 @@ describe('opstore', () => {
       countRef.decr()
       dictRef.set('foo', 'bar')
 
-      assert.equal(
-        JSON.stringify(store1.get()),
-        JSON.stringify(store2.get())
-      )
+      expect(JSON.stringify(store1.get())).toEqual(JSON.stringify(store2.get()))
     })
   })
 })
