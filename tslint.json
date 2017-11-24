@@ -1,0 +1,6 @@
+{
+  "lintOptions": {
+    "typeCheck": true
+  },
+  "extends": ["tslint:recommended", "tslint-config-prettier"]
+}
