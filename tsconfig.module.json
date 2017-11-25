@@ -7,17 +7,5 @@
     "declaration": true,
     "outDir": "dist/module"
   },
-  "files": [
-    "src/ops/decr.ts",
-    "src/ops/incr.ts",
-    "src/ops/index.ts",
-    "src/ops/lpush.ts",
-    "src/ops/lremi.ts",
-    "src/ops/lset.ts",
-    "src/ops/set.ts",
-    "src/buildStore.ts",
-    "src/createRef.ts",
-    "src/index.ts",
-    "src/index.d.ts"
-  ]
+  "files": ["src/index.ts", "src/index.d.ts"]
 }

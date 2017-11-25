@@ -1,12 +1,11 @@
-import {buildStore} from '../buildStore'
-import * as lremi from '../ops/lremi'
+import {createFactory, lremi} from '../'
 import {IStore, StoreFactory} from '../types'
 
 describe('opstore/ops/lremi', () => {
   let createStore: StoreFactory<any>
 
   beforeAll(() => {
-    createStore = buildStore({lremi})
+    createStore = createFactory({lremi})
   })
 
   it('should remove an item from at list at a given index', () => {

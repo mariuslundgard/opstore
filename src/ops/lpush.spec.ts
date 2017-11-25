@@ -1,12 +1,11 @@
-import {buildStore} from '../buildStore'
-import * as lpush from '../ops/lpush'
+import {createFactory, lpush} from '../'
 import {IStore, StoreFactory} from '../types'
 
 describe('opstore/ops/lpush', () => {
   let createStore: StoreFactory<any>
 
   beforeAll(() => {
-    createStore = buildStore({lpush})
+    createStore = createFactory({lpush})
   })
 
   it('should push an item to the end of a list', () => {

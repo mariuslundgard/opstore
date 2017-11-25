@@ -1,14 +1,14 @@
-import {createStore} from './'
+import opstore from './'
 import {IStore} from './types'
 
 describe('opstore/store', () => {
   it('should store data', () => {
-    const store = createStore(true)
+    const store = opstore.createStore(true)
     expect(store.get()).toEqual(true)
   })
 
   it('should update stored data', () => {
-    const store: IStore<boolean> = createStore(true)
+    const store: IStore<boolean> = opstore.createStore(true)
     const ref = store.ref()
 
     expect(store.get()).toEqual(true)
@@ -21,7 +21,7 @@ describe('opstore/store', () => {
 
     type State = number
 
-    const store: IStore<State> = createStore(-1)
+    const store: IStore<State> = opstore.createStore(-1)
     const ref = store.ref()
 
     let idx = 0
@@ -52,8 +52,8 @@ describe('opstore/store', () => {
       count: number
     }
 
-    const store1: IStore<IState> = createStore({list: [], dict: {}, count: 0})
-    const store2: IStore<IState> = createStore({list: [], dict: {}, count: 0})
+    const store1: IStore<IState> = opstore.createStore({list: [], dict: {}, count: 0})
+    const store2: IStore<IState> = opstore.createStore({list: [], dict: {}, count: 0})
     const listRef = store1.ref('list')
     const dictRef = store1.ref('dict')
     const countRef = store1.ref('count')
@@ -82,7 +82,7 @@ describe('opstore/store', () => {
       }
     }
 
-    const store: IStore<IState> = createStore({dict: {items: []}})
+    const store: IStore<IState> = opstore.createStore({dict: {items: []}})
     const dictRef = store.ref('dict')
     const itemsRef = dictRef.ref('items')
 

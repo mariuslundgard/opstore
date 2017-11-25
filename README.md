@@ -11,12 +11,13 @@ npm install opstore
 
 ## Features
 
-* Single source of truth. Data is stored in a single, immutable atom.
-* Composable. Keep sizes small and roll your own store by only bundling the operators you need.
-* Extensible. Add your own operators and middleware.
-* Observable. Subscribe to partial and/or every state change.
-* Message-driven. Every operation is dispatched internally as a message, which enables such things as logging and event
-  sourcing by way of middleware.
+* **Single source of truth.** Data is stored in a single, immutable atom.
+* **Composable.** Keep sizes small and roll your own store by only bundling the operators you need.
+* **Extensible.** Add your own operators and middleware.
+* **Observable.** Subscribe to partial and/or every state change.
+* **Message-driven.** Every operation is dispatched internally as a message, which enables such things as logging and
+  event sourcing by way of middleware.
+* **Typed.** Written in TypeScript.
 
 ## Motivation
 
@@ -31,7 +32,7 @@ This project is based on ideas from [Redux](http://redux.js.org/), [Redis](https
 ### Out of the box
 
 ```js
-const {createStore} = require('opstore')
+import {createStore} from 'opstore'
 
 const store = createStore({count: 0})
 const countRef = store.ref('count')
@@ -49,12 +50,9 @@ countRef.decr() // 0
 ### Composing a store
 
 ```js
-const buildStore = require('opstore/src/buildStore')
+import {createFactory, lpush, lremi} from 'opstore'
 
-const createStore = buildStore({
-  lpush: require('opstore/src/ops/lpush'),
-  lremi: require('opstore/src/ops/lremi')
-})
+const createStore = createFactory({lpush, lremi})
 
 const store = createStore({
   todos: []
@@ -73,3 +71,7 @@ todosRef.lremi(0) // [{"title":"B"}]
 ## Documentation
 
 See [API Documentation](API.md).
+
+## License
+
+MIT © [Marius Lundgård](https://mariuslundgard.com)

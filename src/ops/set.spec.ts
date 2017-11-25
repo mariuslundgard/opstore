@@ -1,12 +1,11 @@
-import {buildStore} from '../buildStore'
-import * as set from '../ops/set'
+import {createFactory, set} from '../'
 import {IStore, StoreFactory} from '../types'
 
 describe('opstore/ops/set', () => {
   let createStore: StoreFactory<any>
 
   beforeAll(() => {
-    createStore = buildStore({set})
+    createStore = createFactory({set})
   })
 
   it('should set a value', () => {

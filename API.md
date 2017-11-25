@@ -1,32 +1,50 @@
 # API Documentation
 
+* [Top-level functions](#top-level-functions)
+  * [`createStore`](#createStore)
+  * [`createFactory`](#createFactory)
+* [Store methods](#store-methods)
+  * [`store.dispatch`](#store.dispatch)
+  * [`store.get`](#store.get)
+  * [`store.notifyObservers`](#store.notifyObservers)
+  * [`store.ref`](#store.ref)
+  * [`store.subscribe`](#store.subscribe)
+  * [`store.use`](#store.use)
+* [Reference methods](#reference-methods)
+  * [`ref.get`](#ref.get)
+  * [`ref.ref`](#ref.ref)
+  * [`ref.subscribe`](#ref.subscribe)
+* [Reference operator methods (optional)](#reference-operator-methods-optional)
+  * [`ref.decr`](#ref.decr)
+  * [`ref.incr`](#ref.incr)
+  * [`ref.lpush`](#ref.lpush)
+  * [`ref.lremi`](#ref.lremi)
+  * [`ref.lset`](#ref.lset)
+  * [`ref.set`](#ref.set)
+
 ## Top-level functions
 
-### `createStore([initialState])`
+### <a name="createStore"></a> `createStore([initialState])`
 
 Creates a store instance.
 
 ```js
-const createStore = require('opstore')
+import {createStore} from 'opstore'
 
 const store = createStore(1)
 
 console.log(store.get()) // 1
 ```
 
-## Build functions
+### <a name="createFactory"></a> `createFactory(opHandlers)`
 
-### `buildStore(ops)`
-
-Builds a store factory function (e.g. `createStore`).
+Builds a store factory function.
 
 ```js
-const buildStore = require('opstore/src/buildStore')
+import {createFactory, decr, incr, lpush, lremi, lset, set} from 'opstore'
 
-// Build a custom store factory
-const createStore = buildStore({
-  lset: require('opstore/src/ops/lset')
-})
+// Build a custom store factory with just the necessary operators
+const createStore = createFactory({decr, incr, lpush, lremi, lset, set})
 
 const store = createStore({list: []})
 const listRef = store.ref('list')
@@ -39,34 +57,47 @@ console.log(listRef.get()) // [1, 2]
 
 ## Store methods
 
-### `store.dispatch(op)`
+### <a name="store.dispatch"></a> `store.dispatch(op)`
 
 Dispatches an operator message.
 
-### `store.get([key])`
+### <a name="store.get"></a> `store.get([key])`
 
 Gets a state snapshot (the current value).
 
-### `store.notifyObservers(keySegmentArray)`
+### <a name="store.notifyObservers"></a> `store.notifyObservers(keySegmentArray)`
 
 Notifies observers at any key.
 
 > NOTE: A _key_ is a slash-delimited path to a value in the state tree.
 
-### `store.ref([key])`
+### <a name="store.ref"></a> `store.ref([key])`
 
 Creates a reference to a value in the state tree.
 
-### `store.subscribe(observer, [key])`
+### <a name="store.subscribe"></a> `store.subscribe(observer, [key])`
 
 Subscribes to changes to a key’s value in the state tree.
 
-### `store.use(middlewareFn)`
+```js
+const store = opstore.create(0)
+
+store.subscribe({
+  next(state) {
+    console.log(state)
+  }
+})
+
+store.ref().incr() // 1
+store.ref().incr() // 2
+```
+
+### <a name="store.use"></a> `store.use(middlewareFn)`
 
 Adds a middleware function to the middleware stack. This allows for intercepting operations before they are applied.
 
 ```js
-const store = createStore([])
+const store = opstore.create([])
 const ref = store.ref()
 
 // Add a simple logger middleware
@@ -83,43 +114,43 @@ ref.lpush(1) // {"type":"lpush","value":1}
 Using the `ref()` method on the store (see _Store methods_ above) yields a reference instance:
 
 ```js
-const store = createStore({title: 'Hello, world'})
+const store = opstore.create({title: 'Hello, world'})
 const titleRef = store.ref('title')
 // Use the "titleRef" instance to modify the "title" state
 ```
 
 The reference instance contains the operator methods. Using references is the only way to change state.
 
-#### `ref.get([key])` (built-in)
+### <a name="ref.get"></a> `ref.get([key])` (built-in)
 
 Gets a state snapshot (the current value).
 
-#### `ref.ref([key])` (built-in)
+### <a name="ref.ref"></a> `ref.ref([key])` (built-in)
 
 Creates a reference to a value in the state tree, relative to the parent reference.
 
-#### `ref.subscribe(observerFn)` (built-in)
+### <a name="ref.subscribe"></a> `ref.subscribe(observer)` (built-in)
 
 Subscribe to state changes.
 
 ```js
-const store = createStore({items: []})
+const store = opstore.create({items: []})
 const itemsRef = store.ref('items')
 
-itemsRef.subscribe(console.log)
+itemsRef.subscribe({next: console.log})
 
 itemsRef.lpush(1) // [1]
 itemsRef.lpush(2) // [1, 2]
 ```
 
-### Operators
+### Reference operator methods (optional)
 
-#### `ref.decr([key])`
+### <a name="ref.decr"></a> `ref.decr([key])`
 
 Decrements a numeric value.
 
 ```js
-const store = createStore({count: 0})
+const store = opstore.create({count: 0})
 const countRef = store.ref('count')
 
 console.log(countRef.get()) // 0
@@ -127,12 +158,12 @@ countRef.decr()
 console.log(countRef.get()) // -1
 ```
 
-#### `ref.incr([key])`
+### <a name="ref.incr"></a> `ref.incr([key])`
 
 Increments a numeric value.
 
 ```js
-const store = createStore({count: 0})
+const store = opstore.create({count: 0})
 const countRef = store.ref('count')
 
 console.log(countRef.get()) // 0
@@ -140,12 +171,12 @@ countRef.incr()
 console.log(countRef.get()) // 1
 ```
 
-#### `ref.lpush([key], value)`
+### <a name="ref.lpush"></a> `ref.lpush([key], value)`
 
 Pushes a value to end of a list.
 
 ```js
-const store = createStore({items: []})
+const store = opstore.create({items: []})
 const itemsRef = store.ref('items')
 
 itemsRef.lpush(1)
@@ -153,36 +184,36 @@ itemsRef.lpush(2)
 console.log(itemsRef.get()) // [1, 2]
 ```
 
-#### `ref.lremi([key], index)`
+### <a name="ref.lremi"></a> `ref.lremi([key], index)`
 
 Removes a value from a list at the given index.
 
 ```js
-const store = createStore({items: [1, 2]})
+const store = opstore.create({items: [1, 2]})
 const itemsRef = store.ref('items')
 
 itemsRef.lremi(1)
 console.log(itemsRef.get()) // [2]
 ```
 
-#### `ref.lset([key], index, value)`
+### <a name="ref.lset"></a> `ref.lset([key], index, value)`
 
 Sets a value in a list at a given index.
 
 ```js
-const store = createStore({items: [1, 2]})
+const store = opstore.create({items: [1, 2]})
 const itemsRef = store.ref('items')
 
 itemsRef.lset(1, 3)
 console.log(itemsRef.get()) // [1, 3]
 ```
 
-#### `ref.set([key], value)`
+### <a name="ref.set"></a> `ref.set([key], value)`
 
 Sets a value at a key.
 
 ```js
-const store = createStore({foo: 1})
+const store = opstore.create({foo: 1})
 const fooRef = store.ref('foo')
 
 fooRef.set(2)

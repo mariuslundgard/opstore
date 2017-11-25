@@ -1,6 +1,20 @@
-import {createStore} from './createStore'
-import {IStore} from './types'
+import * as decr from './ops/decr'
+import * as incr from './ops/incr'
+import * as lpush from './ops/lpush'
+import * as lremi from './ops/lremi'
+import * as lset from './ops/lset'
+import * as set from './ops/set'
+import {createFactory, createStore} from './store'
+import {IOpHandlers, IStore} from './types'
 
-export {IStore}
-export {createStore}
-export default {createStore}
+// Export op handlers
+export {decr, incr, lremi, lset, lpush, set}
+
+// Export top-level methods
+export {createFactory, createStore}
+
+// Export types
+export {IOpHandlers, IStore}
+
+// Export default
+export default {createFactory, createStore}

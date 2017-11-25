@@ -1,12 +1,11 @@
-import {buildStore} from '../buildStore'
-import * as lset from '../ops/lset'
+import {createFactory, lset} from '../'
 import {IStore, StoreFactory} from '../types'
 
 describe('opstore/ops/lset', () => {
   let createStore: StoreFactory<any>
 
   beforeAll(() => {
-    createStore = buildStore({lset})
+    createStore = createFactory({lset})
   })
 
   it('should set an item in a list at a given index', () => {

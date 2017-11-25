@@ -1,16 +1,15 @@
-import {buildStore} from '../buildStore'
-import * as decr from '../ops/decr'
+import {createFactory, decr} from '../'
 import {IStore, StoreFactory} from '../types'
 
 describe('opstore/ops/decr', () => {
-  let createStore: StoreFactory<any>
+  let create: StoreFactory<any>
 
   beforeAll(() => {
-    createStore = buildStore({decr})
+    create = createFactory({decr})
   })
 
   it('should decrement a number', () => {
-    const store: IStore<number> = createStore(0)
+    const store: IStore<number> = create(0)
     const ref = store.ref()
 
     ref.decr()
@@ -26,7 +25,7 @@ describe('opstore/ops/decr', () => {
       }
     }
 
-    const store: IStore<IState> = createStore({foo: {bar: 0}})
+    const store: IStore<IState> = create({foo: {bar: 0}})
     const ref = store.ref('foo')
 
     ref.decr('bar')

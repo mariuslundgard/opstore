@@ -1,9 +1,12 @@
 import * as property from 'segmented-property'
-import {createRef} from './createRef'
-import {IObservers, IOpHandlers, IOpMsg, IRefs, IStore, MiddlewareFn} from './types'
+import builtinOpHandlers from './ops'
+import {createRef} from './ref'
+import {IObservers, IOpHandlers, IOpMsg, IRefs, IStore, MiddlewareFn, StoreFactory} from './types'
 
-export function buildStore<State>(opHandlers: IOpHandlers<State> = {}) {
-  return function createStore(initialState: State): IStore<State> {
+export const createStore: StoreFactory<any> = createFactory(builtinOpHandlers)
+
+export function createFactory<State>(opHandlers: IOpHandlers<State> = {}): StoreFactory<State> {
+  return (initialState: State): IStore<State> => {
     const refs: IRefs = {}
     const observers: IObservers = {}
     const middlewareFns: MiddlewareFn[] = []

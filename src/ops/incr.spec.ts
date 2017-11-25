@@ -1,12 +1,11 @@
-import {buildStore} from '../buildStore'
-import * as incr from '../ops/incr'
+import {createFactory, incr} from '../'
 import {IStore, StoreFactory} from '../types'
 
 describe('opstore/ops/incr', () => {
   let createStore: StoreFactory<any>
 
   beforeAll(() => {
-    createStore = buildStore({incr})
+    createStore = createFactory({incr})
   })
 
   it('should increment a number', () => {

@@ -5,19 +5,7 @@
     "sourceMap": true,
     "types": ["jest"]
   },
-  "files": [
-    "src/ops/decr.ts",
-    "src/ops/incr.ts",
-    "src/ops/index.ts",
-    "src/ops/lpush.ts",
-    "src/ops/lremi.ts",
-    "src/ops/lset.ts",
-    "src/ops/set.ts",
-    "src/buildStore.ts",
-    "src/createRef.ts",
-    "src/index.ts",
-    "src/index.d.ts"
-  ],
+  "files": ["src/index.ts", "src/index.d.ts"],
   "include": [
     "src/ops/decr.spec.ts",
     "src/ops/incr.spec.ts",
