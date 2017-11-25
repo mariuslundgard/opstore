@@ -1,10 +1,10 @@
 {
   "name": "opstore",
   "version": "1.1.3",
-  "main": "dist/commonjs/index.js",
   "repository": "git@github.com:mariuslundgard/opstore.git",
   "author": "Marius Lundgård <studio@mariuslundgard.com>",
   "license": "MIT",
+  "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
   "typings": "dist/module/index.d.ts",
   "pre-commit": [
@@ -25,7 +25,7 @@
     "tsc-module": "tsc -p tsconfig.module.json"
   },
   "dependencies": {
-    "segmented-property": "^1.0.2"
+    "segmented-property": "^2.0.0"
   },
   "devDependencies": {
     "@types/jest": "^21.1.8",

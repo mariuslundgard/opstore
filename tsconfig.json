@@ -5,7 +5,7 @@
     "sourceMap": true,
     "types": ["jest"]
   },
-  "files": ["src/index.ts", "src/index.d.ts"],
+  "files": ["src/index.ts"],
   "include": [
     "src/ops/decr.spec.ts",
     "src/ops/incr.spec.ts",
