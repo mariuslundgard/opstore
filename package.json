@@ -21,7 +21,7 @@
     "tsc-module": "tsc -p tsconfig.module.json"
   },
   "dependencies": {
-    "segmented-property": "^2.0.0"
+    "segmented-property": "^2.0.1"
   },
   "devDependencies": {
     "@types/jest": "^21.1.8",
