@@ -1,19 +1,17 @@
 import * as property from 'segmented-property'
 import {pathJoin} from '../pathJoin'
-import {IStore} from '../types'
 
-export interface ISetOpMsg {
+export interface ISetMsg {
   type: string
   key: string
   value: any
 }
 
-export function exec(store: IStore<any>, op: ISetOpMsg) {
-  store.state = property.set(store.state, op.key, op.value)
-  store.notifyObservers(op.key ? op.key.split('/') : ['.'])
+export function transform(state: any, msg: ISetMsg) {
+  return property.set(state, msg.key, msg.value)
 }
 
-export function create(type: string, refKey: string, args: any[]): ISetOpMsg {
+export function create(type: string, refKey: string, args: any[]): ISetMsg {
   let key = refKey
 
   if (args.length === 2) {

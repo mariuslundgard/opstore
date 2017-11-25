@@ -88,4 +88,24 @@ describe('opstore/store', () => {
 
     expect(Array.isArray(itemsRef.get())).toEqual(true)
   })
+
+  it('should not send values when unchanged', () => {
+    expect.assertions(1)
+
+    const store: IStore<any> = opstore.createStore({
+      bar: 1,
+      foo: 1
+    })
+
+    const fooRef = store.ref('foo')
+
+    fooRef.subscribe({
+      next: () => {
+        expect(true).toEqual(true)
+      }
+    })
+
+    fooRef.set(1)
+    fooRef.set(2)
+  })
 })

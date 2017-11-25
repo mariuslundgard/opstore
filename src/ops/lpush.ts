@@ -1,21 +1,19 @@
 import * as property from 'segmented-property'
 import {pathJoin} from '../pathJoin'
-import {IStore} from '../types'
 
-export interface ILPushOpMsg {
+export interface ILPushMsg {
   type: string
   key: string
   value: any
 }
 
-export function exec(store: IStore<any>, op: ILPushOpMsg) {
-  const currValue = property.get(store.state, op.key)
+export function transform(state: any, msg: ILPushMsg) {
+  const currValue = property.get(state, msg.key)
 
-  store.state = property.set(store.state, op.key, currValue.concat([op.value]))
-  store.notifyObservers(op.key ? op.key.split('/') : ['.'])
+  return property.set(state, msg.key, currValue.concat([msg.value]))
 }
 
-export function create(type: string, refKey: string, args: any[]): ILPushOpMsg {
+export function create(type: string, refKey: string, args: any[]): ILPushMsg {
   let key = refKey
 
   if (args.length === 2) {

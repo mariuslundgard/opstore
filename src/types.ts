@@ -26,25 +26,25 @@ export interface IRefs {
   [key: string]: IRef<any, any>
 }
 
-export interface IOpMsg {
+export interface IMsg {
   type: string
   [key: string]: any
 }
 
-export interface IOpHandler<T> {
-  create: (...args: any[]) => IOpMsg
-  exec: (store: IStore<T>, op: IOpMsg) => void
+export interface IOperator<T> {
+  create: (...args: any[]) => IMsg
+  transform: (state: T, msg: IMsg) => T
 }
 
-export interface IOpHandlers<T> {
-  [key: string]: IOpHandler<T>
+export interface IOperators<T> {
+  [key: string]: IOperator<T>
 }
 
 export interface IOps {
   [key: string]: Op
 }
 
-export type MiddlewareFn = (op: IOpMsg, next: () => void) => void
+export type MiddlewareFn = (msfg: IMsg, next: () => void) => void
 
 export interface IStore<T> {
   dispatch: (op: any) => void

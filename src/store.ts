@@ -1,29 +1,33 @@
 import * as property from 'segmented-property'
 import builtinOpHandlers from './ops'
 import {createRef} from './ref'
-import {IObservers, IOpHandlers, IOpMsg, IRefs, IStore, MiddlewareFn, StoreFactory} from './types'
+import {IMsg, IObservers, IOperators, IRefs, IStore, MiddlewareFn, StoreFactory} from './types'
 
 export const createStore: StoreFactory<any> = createFactory(builtinOpHandlers)
 
-export function createFactory<State>(opHandlers: IOpHandlers<State> = {}): StoreFactory<State> {
+export function createFactory<State>(operators: IOperators<State> = {}): StoreFactory<State> {
   return (initialState: State): IStore<State> => {
     const refs: IRefs = {}
     const observers: IObservers = {}
     const middlewareFns: MiddlewareFn[] = []
 
-    const applyOp = (op: IOpMsg) => {
-      if (opHandlers[op.type]) {
-        return opHandlers[op.type].exec(store, op)
-      }
+    let prevState: State
 
-      throw new Error(`Unknown operation: ${op.type}`)
+    const applyOp = (msg: IMsg) => {
+      if (operators[msg.type]) {
+        prevState = store.state
+        store.state = operators[msg.type].transform(store.state, msg)
+        store.notifyObservers(msg.key ? msg.key.split('/') : ['.'])
+      } else {
+        throw new Error(`Unknown operation: ${msg.type}`)
+      }
     }
 
     const store: IStore<State> = {
       state: initialState,
 
       ref: refKey => {
-        refs[refKey] = createRef(refKey, store, opHandlers)
+        refs[refKey] = createRef(refKey, store, operators)
         return refs[refKey]
       },
 
@@ -73,9 +77,14 @@ export function createFactory<State>(opHandlers: IOpHandlers<State> = {}): Store
         const key = keyArray.join('/')
 
         if (observers[key]) {
-          observers[key].forEach(observer => {
-            observer.next(key === '.' ? store.state : property.get(store.state, key))
-          })
+          const prevValue = key === '.' ? prevState : property.get(prevState, key)
+          const currValue = key === '.' ? store.state : property.get(store.state, key)
+
+          if (prevValue !== currValue) {
+            observers[key].forEach(observer => {
+              observer.next(currValue)
+            })
+          }
         }
 
         keyArray.pop()

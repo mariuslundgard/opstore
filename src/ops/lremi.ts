@@ -1,23 +1,22 @@
 import * as property from 'segmented-property'
 import {pathJoin} from '../pathJoin'
-import {IStore} from '../types'
 
-export interface ILRemiOpMsg {
+export interface ILRemiMsg {
   type: string
   key: string
   index: number
 }
 
-export function exec(store: IStore<any>, op: ILRemiOpMsg) {
-  const currValue: any = property.get(store.state, op.key)
+export function transform(state: any, msg: ILRemiMsg) {
+  const currValue: any = property.get(state, msg.key)
   const newValue = currValue.slice()
 
-  newValue.splice(op.index, 1)
-  store.state = property.set(store.state, op.key, newValue)
-  store.notifyObservers(op.key ? op.key.split('/') : ['.'])
+  newValue.splice(msg.index, 1)
+
+  return property.set(state, msg.key, newValue)
 }
 
-export function create(type: string, refKey: string, args: any[]): ILRemiOpMsg {
+export function create(type: string, refKey: string, args: any[]): ILRemiMsg {
   let key = refKey
 
   if (args.length === 2) {

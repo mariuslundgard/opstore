@@ -5,7 +5,7 @@ import * as lremi from './ops/lremi'
 import * as lset from './ops/lset'
 import * as set from './ops/set'
 import {createFactory, createStore} from './store'
-import {IOpHandlers, IStore} from './types'
+import {IOperators, IStore} from './types'
 
 // Export op handlers
 export {decr, incr, lremi, lset, lpush, set}
@@ -14,7 +14,7 @@ export {decr, incr, lremi, lset, lpush, set}
 export {createFactory, createStore}
 
 // Export types
-export {IOpHandlers, IStore}
+export {IOperators, IStore}
 
 // Export default
 export default {createFactory, createStore}
