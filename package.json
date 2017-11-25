@@ -7,10 +7,6 @@
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
   "typings": "dist/module/index.d.ts",
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
   "scripts": {
     "build": "npm-run-all tsc-*",
     "clean": "rimraf dist",
@@ -30,9 +26,9 @@
   "devDependencies": {
     "@types/jest": "^21.1.8",
     "coveralls": "^3.0.0",
+    "husky": "^0.14.3",
     "jest": "^21.2.1",
     "npm-run-all": "^4.1.2",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.8.2",
     "rimraf": "^2.6.2",
     "ts-jest": "^21.2.3",
