@@ -7,6 +7,7 @@ npm install opstore
 ```
 
 [![build status](https://img.shields.io/travis/mariuslundgard/opstore/master.svg?style=flat-square)](https://travis-ci.org/mariuslundgard/opstore)
+[![coverage status](https://img.shields.io/coveralls/mariuslundgard/opstore/master.svg?style=flat-square)](https://coveralls.io/github/mariuslundgard/opstore?branch=master)
 [![npm version](https://img.shields.io/npm/v/opstore.svg?style=flat-square)](https://www.npmjs.com/package/opstore)
 
 ## Features

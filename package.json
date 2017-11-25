@@ -14,12 +14,13 @@
   "scripts": {
     "build": "npm-run-all tsc-*",
     "clean": "rimraf dist",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "format": "prettier --no-bracket-spacing --no-semi --print-width 120 --single-quote --write \"{src,perf/src,test}/**/*.{js,ts,tsx}\"",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "prebuild": "npm run clean",
     "precommit": "npm run build && npm run lint && npm run test",
     "prepublishOnly": "npm run build",
-    "test": "jest",
+    "test": "jest --coverage",
     "tsc-commonjs": "tsc -p tsconfig.commonjs.json",
     "tsc-module": "tsc -p tsconfig.module.json"
   },
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@types/jest": "^21.1.8",
+    "coveralls": "^3.0.0",
     "jest": "^21.2.1",
     "npm-run-all": "^4.1.2",
     "pre-commit": "^1.2.2",
