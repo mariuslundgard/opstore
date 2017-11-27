@@ -38,7 +38,7 @@ import {createStore} from 'opstore'
 const store = createStore({count: 0})
 const countRef = store.ref('count')
 
-countRef.subcribe(count => console.log(count))
+countRef.subscribe(count => console.log(count))
 
 console.log(countRef.get()) // 0
 
