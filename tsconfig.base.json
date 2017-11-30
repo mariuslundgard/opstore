@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "importHelpers": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "removeComments": true,
