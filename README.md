@@ -1,6 +1,6 @@
 # opstore
 
-An operator-based data store for JavaScript.
+An immutable operator-based state container for JavaScript.
 
 ```sh
 npm install opstore
