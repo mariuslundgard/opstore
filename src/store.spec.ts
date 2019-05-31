@@ -52,8 +52,16 @@ describe('opstore/store', () => {
       count: number
     }
 
-    const store1: IStore<IState> = opstore.createStore({list: [], dict: {}, count: 0})
-    const store2: IStore<IState> = opstore.createStore({list: [], dict: {}, count: 0})
+    const store1: IStore<IState> = opstore.createStore({
+      count: 0,
+      dict: {},
+      list: []
+    })
+    const store2: IStore<IState> = opstore.createStore({
+      count: 0,
+      dict: {},
+      list: []
+    })
     const listRef = store1.ref('list')
     const dictRef = store1.ref('dict')
     const countRef = store1.ref('count')

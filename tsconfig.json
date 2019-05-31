@@ -1,20 +1,18 @@
 {
-  "extends": "./.tsconfig/base.json",
+  "extends": "./ts/tsconfig-base.json",
   "compilerOptions": {
     "moduleResolution": "node",
     "sourceMap": true,
     "types": ["jest"]
   },
-  "files": ["src/index.ts"],
-  "include": [
+  "files": [
     "src/ops/decr.spec.ts",
     "src/ops/incr.spec.ts",
     "src/ops/lpush.spec.ts",
-    "src/ops/lremi.spec.ts",
     "src/ops/lset.spec.ts",
     "src/ops/set.spec.ts",
+    "src/index.ts",
     "src/pathJoin.spec.ts",
-    "src/ref.spec.ts",
     "src/store.spec.ts"
   ]
 }

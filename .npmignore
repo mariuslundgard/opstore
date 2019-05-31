@@ -4,6 +4,7 @@
 /.prettierignore
 /.travis.yml
 /coverage
+/jest.config.js
 /node_modules
 /src
 /tsconfig.*

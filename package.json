@@ -5,39 +5,39 @@
   "repository": "git@github.com:mariuslundgard/opstore.git",
   "author": "Marius Lundgård <studio@mariuslundgard.com>",
   "license": "MIT",
-  "main": "dist/commonjs/index.js",
-  "module": "dist/module/index.js",
-  "typings": "dist/module/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/es/index.d.ts",
   "scripts": {
     "build": "npm-run-all tsc-*",
     "clean": "rimraf dist",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "format": "prettier --no-bracket-spacing --no-semi --print-width 120 --single-quote --write \"{src,perf/src,test}/**/*.{js,ts,tsx}\"",
+    "format": "prettier --write \"{src,perf/src,test}/**/*.{js,ts,tsx}\"",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "prebuild": "npm run clean",
     "precommit": "npm run build && npm run lint && npm run test",
     "prepublishOnly": "npm run build",
     "test": "jest --coverage",
-    "tsc-commonjs": "tsc -p .tsconfig/commonjs.json",
-    "tsc-module": "tsc -p .tsconfig/module.json"
+    "tsc-commonjs": "tsc -p ts/tsconfig-cjs.json",
+    "tsc-module": "tsc -p ts/tsconfig-es.json"
   },
   "dependencies": {
-    "segmented-property": "^2.0.2"
+    "segmented-property": "^2.0.4"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.8",
-    "coveralls": "^3.0.0",
-    "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "npm-run-all": "^4.1.2",
-    "prettier": "^1.8.2",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^21.2.3",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.6.0",
-    "typescript": "^2.6.2"
+    "@types/jest": "^24.0.13",
+    "coveralls": "^3.0.3",
+    "husky": "^2.3.0",
+    "jest": "^24.8.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.17.1",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.1"
   },
-  "jest": {
+  "__jest": {
     "collectCoverageFrom": [
       "src/**/*.ts"
     ],

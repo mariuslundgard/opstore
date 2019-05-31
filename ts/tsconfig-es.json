@@ -1,11 +1,11 @@
 {
-  "extends": "./base.json",
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "es6",
     "target": "es5",
     "declaration": true,
-    "outDir": "../dist/commonjs"
+    "outDir": "../dist/es"
   },
   "files": ["../src/index.ts"]
 }
