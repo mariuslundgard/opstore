@@ -1,6 +1,6 @@
 {
   "name": "opstore",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "An immutable operator-based state container for JavaScript.",
   "repository": "git@github.com:mariuslundgard/opstore.git",
   "author": "Marius Lundgård <studio@mariuslundgard.com>",
